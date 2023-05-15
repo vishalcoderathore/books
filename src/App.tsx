@@ -1,6 +1,7 @@
 import BookCreate from './components/base/BookCreate';
 import BookList from './components/base/BookList';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 // Define the Book interface
 export interface Book {
@@ -12,15 +13,25 @@ function App(): React.ReactElement {
   // Update the state definition to use an array of Book objects
   const [books, setBooks] = useState<Book[]>([]);
 
-  const createBook = (name: string): void => {
-    const updatedBooks = [
-      ...books,
-      { id: Math.round(Math.random() * 999), name },
-    ];
+  const fetchBooks = async (): Promise<void> => {
+    const response = await axios.get('http://localhost:3001/books');
+    setBooks(response.data);
+  };
+
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  const createBook = async (name: string): Promise<void> => {
+    const response = await axios.post('http://localhost:3001/books', {
+      name,
+    });
+    const updatedBooks = [...books, response.data];
     setBooks(updatedBooks);
   };
 
-  const deleteBookById = (id: number): void => {
+  const deleteBookById = async (id: number): Promise<void> => {
+    await axios.delete(`http://localhost:3001/books/${id}`);
     const updatedBooks = books.filter(book => {
       return book.id !== id;
     });
@@ -28,10 +39,13 @@ function App(): React.ReactElement {
     setBooks(updatedBooks);
   };
 
-  const editBookById = (id: number, newName: string): void => {
+  const editBookById = async (id: number, newName: string): Promise<void> => {
+    const response = await axios.put(`http://localhost:3001/books/${id}`, {
+      name: newName,
+    });
     const updatedBooks = books.map(book => {
       if (book.id === id) {
-        return { ...book, name: newName };
+        return { ...book, ...response.data };
       }
       return book;
     });
