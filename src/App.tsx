@@ -8,11 +8,11 @@ export interface Book {
   name: string;
 }
 
-function App() {
+function App(): React.ReactElement {
   // Update the state definition to use an array of Book objects
   const [books, setBooks] = useState<Book[]>([]);
 
-  const createBook = (name: string) => {
+  const createBook = (name: string): void => {
     const updatedBooks = [
       ...books,
       { id: Math.round(Math.random() * 999), name },
@@ -20,7 +20,7 @@ function App() {
     setBooks(updatedBooks);
   };
 
-  const deleteBookById = (id: number) => {
+  const deleteBookById = (id: number): void => {
     const updatedBooks = books.filter(book => {
       return book.id !== id;
     });
@@ -28,7 +28,7 @@ function App() {
     setBooks(updatedBooks);
   };
 
-  const editBookById = (id: number, newName: string) => {
+  const editBookById = (id: number, newName: string): void => {
     const updatedBooks = books.map(book => {
       if (book.id === id) {
         return { ...book, name: newName };

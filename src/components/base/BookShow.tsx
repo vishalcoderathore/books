@@ -9,14 +9,13 @@ interface BookShowProps {
 
 const BookShow: React.FC<BookShowProps> = ({ book, onDelete, onEdit }) => {
   const [showEdit, setShowEdit] = useState(false);
-  const handleEdit = () => {
+  const handleEdit = (): void => {
     setShowEdit(!showEdit);
   };
-  const handleDelete = () => {
+  const handleDelete = (): void => {
     onDelete(book.id);
   };
-
-  const handleSubmit = (id: number, name: string) => {
+  const handleSubmit = (id: number, name: string): void => {
     onEdit(id, name);
     setShowEdit(false);
   };
@@ -28,6 +27,7 @@ const BookShow: React.FC<BookShowProps> = ({ book, onDelete, onEdit }) => {
 
   return (
     <div className='book-show'>
+      <img src={`https://picsum.photos/seed/${book.id}/300/200`} alt='books' />
       {content}
       <div className='actions'>
         <button className='edit' onClick={handleEdit}>

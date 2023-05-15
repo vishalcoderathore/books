@@ -27,7 +27,7 @@ module.exports = {
   plugins: ['@typescript-eslint', 'prettier', 'react', 'react-hooks', 'import'],
   rules: {
     // These rules enforce that functions have explicit return types, which can make the code more self-documenting and catch potential bugs. However, some teams find these rules overly strict, especially in a codebase that uses a lot of type inference, and choose to disable them.
-    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/triple-slash-reference': 'off',

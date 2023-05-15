@@ -9,13 +9,11 @@ interface BookCreateProps {
 const BookCreate: React.FC<BookCreateProps> = ({ onCreate }) => {
   const [title, setTitle] = useState('');
 
-  const handleChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setTitle(event.target.value);
   };
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     onCreate(title);
     setTitle('');

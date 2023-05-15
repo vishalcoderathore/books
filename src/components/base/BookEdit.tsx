@@ -1,28 +1,33 @@
-import { SetStateAction, useState } from 'react';
 import { Book } from '../../App';
+import { useState } from 'react';
+
 interface BookEditProps {
   book: Book;
   onSubmit: (id: number, name: string) => void;
 }
 
 const BookEdit: React.FC<BookEditProps> = ({ book, onSubmit }) => {
-  const [name, setName] = useState(book.name);
+  const { id, name: initialName } = book;
+  const [name, setName] = useState(initialName);
 
-  const handleChange = (event: {
-    target: { value: SetStateAction<string> };
-  }) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setName(event.target.value);
   };
 
-  const handleFormSubmit = (event: { preventDefault: () => void }) => {
+  const handleFormSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
-    onSubmit(book.id, name);
+    onSubmit(id, name);
   };
 
   return (
-    <form action='' onSubmit={handleFormSubmit} className='book-edit'>
+    <form onSubmit={handleFormSubmit} className='book-edit'>
       <label htmlFor='editBook'>Name</label>
-      <input className='input' onChange={handleChange} value={name} />
+      <input
+        className='input'
+        onChange={handleChange}
+        value={name}
+        name='bookName'
+      />
       <button className='button is-primary'>Save</button>
     </form>
   );
