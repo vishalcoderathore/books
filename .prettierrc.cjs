@@ -1,6 +1,6 @@
 module.exports = {
   arrowParens: 'avoid',
-  bracketSameLine: false,
+  bracketSameLine: true,
   endOfLine: 'auto',
   jsxSingleQuote: true,
   plugins: ['prettier-plugin-sort-imports'],
@@ -8,5 +8,6 @@ module.exports = {
   semi: true,
   singleQuote: true,
   tabWidth: 2,
+  useTabs: false,
   trailingComma: 'all',
 };

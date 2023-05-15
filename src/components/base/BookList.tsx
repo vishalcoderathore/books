@@ -5,11 +5,14 @@ import { Book } from '../../App';
 interface BookListProps {
   books: Book[];
   onDelete: (id: number) => void;
+  onEdit: (id: number, name: string) => void;
 }
 
-const BookList: React.FC<BookListProps> = ({ books, onDelete }) => {
+const BookList: React.FC<BookListProps> = ({ books, onDelete, onEdit }) => {
   const renderedBooks = books.map(book => {
-    return <BookShow key={book.id} book={book} onDelete={onDelete} />;
+    return (
+      <BookShow key={book.id} book={book} onDelete={onDelete} onEdit={onEdit} />
+    );
   });
 
   return <div className='book-list'>{renderedBooks}</div>;
