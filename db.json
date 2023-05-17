@@ -1,16 +1,3 @@
 {
-  "books": [
-    {
-      "name": "Dark Tower 2",
-      "id": 1
-    },
-    {
-      "name": "Harry Potter 5",
-      "id": 2
-    },
-    {
-      "name": "LoR Pre-Release",
-      "id": 3
-    }
-  ]
+  "books": []
 }
