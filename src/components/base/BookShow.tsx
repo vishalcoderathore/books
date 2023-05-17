@@ -1,6 +1,7 @@
-import BooksContext, { Book } from '../../context/books';
-import { useContext, useState } from 'react';
+import useBooksContext from '../../hooks/use-books-context';
+import { Book } from '../../context/books';
 import BookEdit from './BookEdit';
+import { useState } from 'react';
 interface BookShowProps {
   book: Book;
 }
@@ -21,7 +22,7 @@ const BookShow: React.FC<BookShowProps> = ({ book }) => {
   const handleSubmit = (): void => {
     setShowEdit(false);
   };
-  const context = useContext(BooksContext);
+  const context = useBooksContext();
 
   if (!context) {
     // context hasn't been provided - handle the error here

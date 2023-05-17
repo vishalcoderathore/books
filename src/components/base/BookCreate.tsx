@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import BooksContext from '../../context/books';
+import useBooksContext from '../../hooks/use-books-context';
+import { useState } from 'react';
 
 const BookCreate: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -14,7 +14,7 @@ const BookCreate: React.FC = () => {
     setTitle('');
   };
 
-  const context = useContext(BooksContext);
+  const context = useBooksContext();
   if (!context) {
     // context hasn't been provided - handle the error here, you might want to return from the component
     return null;

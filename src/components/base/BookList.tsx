@@ -1,9 +1,8 @@
-import BooksContext from '../../context/books';
-import { useContext } from 'react';
+import useBooksContext from '../../hooks/use-books-context';
 import BookShow from './BookShow';
 
 const BookList: React.FC = () => {
-  const context = useContext(BooksContext);
+  const context = useBooksContext();
 
   if (!context) {
     // context hasn't been provided - handle the error here, you might want to return from the component

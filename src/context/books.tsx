@@ -6,7 +6,7 @@ export interface Book {
   name: string;
 }
 
-interface BooksContextType {
+export interface BooksContextType {
   books: Book[];
   fetchBooks: () => Promise<void>;
   createBook: (name: string) => Promise<void>;
