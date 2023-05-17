@@ -3,6 +3,9 @@ import { useState } from 'react';
 
 const BookCreate: React.FC = () => {
   const [title, setTitle] = useState('');
+  const context = useBooksContext();
+
+  const { createBook } = context || {};
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setTitle(event.target.value);
@@ -10,16 +13,10 @@ const BookCreate: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    createBook(title);
+    if (createBook) createBook(title);
     setTitle('');
   };
 
-  const context = useBooksContext();
-  if (!context) {
-    // context hasn't been provided - handle the error here, you might want to return from the component
-    return null;
-  }
-  const { createBook } = context;
   return (
     <div className='book-create'>
       <h3>Add a Book</h3>

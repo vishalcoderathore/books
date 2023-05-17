@@ -1,20 +1,18 @@
-import { useEffect, useContext, useState } from 'react';
 import BookCreate from './components/base/BookCreate';
 import BookList from './components/base/BookList';
+import { useEffect, useContext } from 'react';
 
 import BooksContext from './context/books';
 
 function App(): React.ReactElement {
-  const [contextLoaded, setContextLoaded] = useState(false);
   const context = useContext(BooksContext);
+  const { fetchBooks } = context || {}; // Provide an empty object as default value
 
   useEffect(() => {
-    if (!contextLoaded && context) {
-      const { fetchBooks } = context;
+    if (fetchBooks) {
       fetchBooks();
-      setContextLoaded(true);
     }
-  }, [context, contextLoaded]);
+  }, [fetchBooks]);
 
   return (
     <div className='app'>

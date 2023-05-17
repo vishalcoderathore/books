@@ -7,6 +7,8 @@ interface BookShowProps {
 }
 
 const BookShow: React.FC<BookShowProps> = ({ book }) => {
+  const context = useBooksContext();
+  const { deleteBookById } = context || {};
   const [showEdit, setShowEdit] = useState(false);
 
   // Handle editing of a book
@@ -16,20 +18,13 @@ const BookShow: React.FC<BookShowProps> = ({ book }) => {
 
   // Handle book deletion
   const handleDelete = (): void => {
-    deleteBookById(book.id);
+    if (deleteBookById) deleteBookById(book.id);
   };
 
   const handleSubmit = (): void => {
     setShowEdit(false);
   };
-  const context = useBooksContext();
 
-  if (!context) {
-    // context hasn't been provided - handle the error here
-    return <div>Error: BooksContext not available.</div>;
-  }
-
-  const { deleteBookById } = context;
   let content = <h3>{book.name}</h3>;
   if (showEdit) {
     content = <BookEdit book={book} onSubmit={handleSubmit} />;

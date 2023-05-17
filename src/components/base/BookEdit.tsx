@@ -8,6 +8,8 @@ interface BookEditProps {
 }
 
 const BookEdit: React.FC<BookEditProps> = ({ book, onSubmit }) => {
+  const context = useBooksContext();
+  const { editBookById } = context || {};
   const { id, name: initialName } = book;
   const [name, setName] = useState(initialName);
 
@@ -17,18 +19,9 @@ const BookEdit: React.FC<BookEditProps> = ({ book, onSubmit }) => {
 
   const handleFormSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
-    editBookById(id, name);
+    if (editBookById) editBookById(id, name);
     onSubmit();
   };
-
-  const context = useBooksContext();
-
-  if (!context) {
-    // context hasn't been provided - handle the error here
-    return <div>Error: BooksContext not available.</div>;
-  }
-
-  const { editBookById } = context;
 
   return (
     <form onSubmit={handleFormSubmit} className='book-edit'>

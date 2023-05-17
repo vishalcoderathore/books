@@ -1,4 +1,4 @@
-import { createContext, useState, FC, ReactNode } from 'react';
+import { createContext, useState, FC, ReactNode, useCallback } from 'react';
 import axios from 'axios';
 
 export interface Book {
@@ -23,10 +23,10 @@ interface ProviderProps {
 const Provider: FC<ProviderProps> = ({ children }) => {
   const [books, setBooks] = useState<Book[]>([]);
 
-  const fetchBooks = async (): Promise<void> => {
+  const fetchBooks = useCallback(async (): Promise<void> => {
     const response = await axios.get('http://localhost:3001/books');
     setBooks(response.data);
-  };
+  }, []);
 
   const createBook = async (name: string): Promise<void> => {
     const response = await axios.post('http://localhost:3001/books', { name });
