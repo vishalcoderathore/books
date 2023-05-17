@@ -1,25 +1,34 @@
+import BooksContext, { Book } from '../../context/books';
+import { useContext, useState } from 'react';
 import BookEdit from './BookEdit';
-import { Book } from '../../App';
-import { useState } from 'react';
 interface BookShowProps {
   book: Book;
-  onDelete: (id: number) => void;
-  onEdit: (id: number, name: string) => void;
 }
 
-const BookShow: React.FC<BookShowProps> = ({ book, onDelete, onEdit }) => {
+const BookShow: React.FC<BookShowProps> = ({ book }) => {
   const [showEdit, setShowEdit] = useState(false);
+
+  // Handle editing of a book
   const handleEdit = (): void => {
     setShowEdit(!showEdit);
   };
+
+  // Handle book deletion
   const handleDelete = (): void => {
-    onDelete(book.id);
-  };
-  const handleSubmit = (id: number, name: string): void => {
-    onEdit(id, name);
-    setShowEdit(false);
+    deleteBookById(book.id);
   };
 
+  const handleSubmit = (): void => {
+    setShowEdit(false);
+  };
+  const context = useContext(BooksContext);
+
+  if (!context) {
+    // context hasn't been provided - handle the error here
+    return <div>Error: BooksContext not available.</div>;
+  }
+
+  const { deleteBookById } = context;
   let content = <h3>{book.name}</h3>;
   if (showEdit) {
     content = <BookEdit book={book} onSubmit={handleSubmit} />;

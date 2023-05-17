@@ -1,18 +1,17 @@
+import BooksContext from '../../context/books';
+import { useContext } from 'react';
 import BookShow from './BookShow';
-import { Book } from '../../App';
 
-// Add this at the top of your BookList component file, where you have defined the Book interface
-interface BookListProps {
-  books: Book[];
-  onDelete: (id: number) => void;
-  onEdit: (id: number, name: string) => void;
-}
+const BookList: React.FC = () => {
+  const context = useContext(BooksContext);
 
-const BookList: React.FC<BookListProps> = ({ books, onDelete, onEdit }) => {
+  if (!context) {
+    // context hasn't been provided - handle the error here, you might want to return from the component
+    return null;
+  }
+  const { books } = context;
   const renderedBooks = books.map(book => {
-    return (
-      <BookShow key={book.id} book={book} onDelete={onDelete} onEdit={onEdit} />
-    );
+    return <BookShow key={book.id} book={book} />;
   });
 
   return <div className='book-list'>{renderedBooks}</div>;

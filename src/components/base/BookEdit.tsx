@@ -1,9 +1,9 @@
-import { Book } from '../../App';
-import { useState } from 'react';
+import BooksContext, { Book } from '../../context/books';
+import { useContext, useState } from 'react';
 
 interface BookEditProps {
   book: Book;
-  onSubmit: (id: number, name: string) => void;
+  onSubmit: () => void;
 }
 
 const BookEdit: React.FC<BookEditProps> = ({ book, onSubmit }) => {
@@ -16,8 +16,18 @@ const BookEdit: React.FC<BookEditProps> = ({ book, onSubmit }) => {
 
   const handleFormSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
-    onSubmit(id, name);
+    editBookById(id, name);
+    onSubmit();
   };
+
+  const context = useContext(BooksContext);
+
+  if (!context) {
+    // context hasn't been provided - handle the error here
+    return <div>Error: BooksContext not available.</div>;
+  }
+
+  const { editBookById } = context;
 
   return (
     <form onSubmit={handleFormSubmit} className='book-edit'>

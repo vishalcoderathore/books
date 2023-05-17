@@ -1,12 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import BooksContext from '../../context/books';
 
-// Define the BookCreateProps interface
-interface BookCreateProps {
-  onCreate: (title: string) => void;
-}
-
-// Update the component to receive the onCreate prop
-const BookCreate: React.FC<BookCreateProps> = ({ onCreate }) => {
+const BookCreate: React.FC = () => {
   const [title, setTitle] = useState('');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -15,10 +10,16 @@ const BookCreate: React.FC<BookCreateProps> = ({ onCreate }) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    onCreate(title);
+    createBook(title);
     setTitle('');
   };
 
+  const context = useContext(BooksContext);
+  if (!context) {
+    // context hasn't been provided - handle the error here, you might want to return from the component
+    return null;
+  }
+  const { createBook } = context;
   return (
     <div className='book-create'>
       <h3>Add a Book</h3>
